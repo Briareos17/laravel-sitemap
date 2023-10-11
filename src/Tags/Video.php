@@ -19,7 +19,7 @@ class Video
 
     public ?string $contentLoc;
 
-    public ?string $playerLoc;
+    public string|array|null $playerLoc;
 
     public array $options;
 
@@ -27,7 +27,9 @@ class Video
 
     public array $deny;
 
-    public function __construct(string $thumbnailLoc, string $title, string $description, string $contentLoc = null, string $playerLoc = null, array $options = [], array $allow = [], array $deny = [])
+    public array $tags;
+
+    public function __construct(string $thumbnailLoc, string $title, string $description, string $contentLoc = null, string $playerLoc = null, array $options = [], array $allow = [], array $deny = [], array $tags = [])
     {
         if ($contentLoc === null && $playerLoc === null) {
             // https://developers.google.com/search/docs/crawling-indexing/sitemaps/video-sitemaps
@@ -41,7 +43,8 @@ class Video
             ->setPlayerLoc($playerLoc)
             ->setOptions($options)
             ->setAllow($allow)
-            ->setDeny($deny);
+            ->setDeny($deny)
+            ->setTags($tags);
     }
 
     public function setThumbnailLoc(string $thumbnailLoc): self
@@ -72,7 +75,7 @@ class Video
         return $this;
     }
 
-    public function setPlayerLoc(?string $playerLoc): self
+    public function setPlayerLoc(string|array|null $playerLoc): self
     {
         $this->playerLoc = $playerLoc;
 
