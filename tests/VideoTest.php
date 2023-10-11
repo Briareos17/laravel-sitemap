@@ -16,6 +16,7 @@ test('XML has Video tag', function () {
                                     <video:title>My Test Title</video:title>
                                     <video:description>My Test Description</video:description>
                                     <video:content_loc>https://example.com/video.mp4</video:content_loc>
+                                    <video:player_loc allow-embed="yes" autoplay="yes">https://example.com/video.mp4</video:player_loc>
                                     <video:live>no</video:live>
                                     <video:family_friendly>yes</video:family_friendly>
                                     <video:platform relationship="allow">mobile</video:platform>
@@ -27,10 +28,11 @@ test('XML has Video tag', function () {
     $options = ["live" => "no", "family_friendly" => "yes"];
     $allow = ["platform" => Video::OPTION_PLATFORM_MOBILE];
     $deny = ["restriction" => 'CA'];
+    $playerLoc = ['player_loc' => 'https://example.com/video.mp4', 'allow_embed' => 'yes', 'autoplay' => 'yes'];
     $sitemap = Sitemap::create()
         ->add(
             Url::create("https://example.com")
-                ->addVideo("https://example.com/image.jpg", "My Test Title", "My Test Description", "https://example.com/video.mp4", null, $options, $allow, $deny)
+                ->addVideo("https://example.com/image.jpg", "My Test Title", "My Test Description", "https://example.com/video.mp4", $playerLoc, $options, $allow, $deny)
         );
 
     $render_output = $sitemap->render();
